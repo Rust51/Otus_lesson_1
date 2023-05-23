@@ -11,3 +11,17 @@ Task 1. Kernel Update
 Ядро собрано из исходников
 В образе нормально работают VirtualBox Shared Folders
 
+Если я правильно понял, нужно описать скрипт обновления ядра.
+Сначала импортируется репозиторий:
+sudo yum install -y https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm 
+# Установка нового ядра из репозитория elrepo-kernel
+yum --enablerepo elrepo-kernel install kernel-ml -y
+
+# Обновление параметров GRUB
+grub2-mkconfig -o /boot/grub2/grub.cfg -- создаем файл конфигурации grub
+grub2-set-default 0 --настраиваем загрузку с последней установленной версией ядра
+echo "Grub update done."
+# Перезагрузка ВМ
+shutdown -r now
+
+
